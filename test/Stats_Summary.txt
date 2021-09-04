@@ -1,0 +1,57 @@
+=======================================================================================================
+Stats Summary of the AMR data sets
+=======================================================================================================
+    accuracy        identity        coverage         seq_len    
+ Min.   :80.02   Min.   :82.68   Min.   : 80.08   Min.   : 333  
+ 1st Qu.:82.05   1st Qu.:87.80   1st Qu.: 91.96   1st Qu.:1501  
+ Median :84.38   Median :89.87   Median : 97.42   Median :1542  
+ Mean   :85.90   Mean   :90.80   Mean   : 95.28   Mean   :1583  
+ 3rd Qu.:89.08   3rd Qu.:93.60   3rd Qu.: 99.73   3rd Qu.:1544  
+ Max.   :98.06   Max.   :99.74   Max.   :100.00   Max.   :4030  
+    model               name            categories           taxon          
+ Length:485         Length:485         Length:485         Length:485        
+ Class :character   Class :character   Class :character   Class :character  
+ Mode  :character   Mode  :character   Mode  :character   Mode  :character  
+                                                                            
+                                                                            
+                                                                            
+=======================================================================================================
+Pearson correlation between Accuracy and Identity
+[1] 0.9088631
+=======================================================================================================
+Linear regression model Accuracy vs Identity
+
+Call:
+lm(formula = Accuracy ~ Identity, data = data_sets_filtered)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-10.7684  -1.3058   0.0995   1.4246   4.8722 
+
+Coefficients:
+            Estimate Std. Error t value Pr(>|t|)    
+(Intercept) -8.39066    1.97091  -4.257 2.49e-05 ***
+Identity     1.03838    0.02168  47.889  < 2e-16 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 1.967 on 483 degrees of freedom
+Multiple R-squared:  0.826,	Adjusted R-squared:  0.8257 
+F-statistic:  2293 on 1 and 483 DF,  p-value: < 2.2e-16
+
+=======================================================================================================
+T-test are used when the two set of population data are normally distributed
+data1(Accuracy, Model_Type == rRNA mutation model)
+data2(Accuracy, Model_Type == protein homolog model)
+
+	Welch Two Sample t-test
+
+data:  data1 and data2
+t = -12.338, df = 153.13, p-value < 2.2e-16
+alternative hypothesis: true difference in means is not equal to 0
+95 percent confidence interval:
+ -7.183608 -5.200566
+sample estimates:
+mean of x mean of y 
+ 84.64212  90.83421 
+
