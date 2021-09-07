@@ -22,7 +22,7 @@ Pearson correlation between Accuracy and Identity
 Linear regression model Accuracy vs Identity
 
 Call:
-lm(formula = Accuracy ~ Identity, data = data_sets_filtered)
+lm(formula = Accuracy ~ Identity, data = data_sets)
 
 Residuals:
      Min       1Q   Median       3Q      Max 
@@ -55,3 +55,4 @@ sample estimates:
 mean of x mean of y 
  84.64212  90.83421 
 
+=======================================================================================================

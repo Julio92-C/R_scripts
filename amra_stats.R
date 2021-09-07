@@ -21,9 +21,7 @@ library(manipulateWidget)
 p <- arg_parser("AMR SUMMARY STATS")
 
 # 2. Then we can add the input_file argument. This argument is mandatory, so we haven’t specified a default
-
 p <- add_argument(p, "input_file", help="Path to input_file, it shoul be a comma separated csv file from  Metrichor’s Antimicrobial Resistance Mapping Application (ARMA)")
-
 
 # 3. Flag argument. This is a optional argument, that can be used to turn functionality within our script on and off.
 p <- add_argument(p, "--filter", help="Filter by Accuracy, Identity, Coverage, Sequence Length", flag=TRUE)
@@ -31,7 +29,6 @@ p <- add_argument(p, "--output_dir", help="Put the results to a specific output 
 
 # 4. parse the arguments:
 argv <- parse_args(p)
-
 
 # Load the data sets ###############################
 data_sets <- read.csv(argv$input_file)
@@ -42,11 +39,9 @@ data_sets_cleaned <- data_sets[c(-1,-2,-3,-4,-5,-10,-11, -13, -15, -18, -19)]
 # Reordering the columns in a data frame #####
 data_sets_cleaned <- data_sets_cleaned[c(1, 2, 5, 7, 3, 4, 6, 8)]
 
-
 # Filter data-set by (identity > 80%, Accurracy > 80% and Coverage > 80% ) ############################## 
 data_sets_filtered <- data_sets_cleaned[data_sets_cleaned$identity > 80 & data_sets_cleaned$accuracy > 80
                                         & data_sets_cleaned$coverage > 80,]
-
 
 # Set up  Variables ######################
 Accuracy <- data_sets_filtered$accuracy
@@ -58,41 +53,10 @@ Category <-  factor(data_sets_filtered$categories)
 AMR <- data_sets_filtered$name
 Specie <- data_sets_filtered$taxon
 
-
-# Basic stats analysis ###########
-sink('./test/Stats_Summary.txt')
-
-cat("=======================================================================================================\n")
-cat("Stats Summary of the AMR data sets\n")
-cat("=======================================================================================================\n")
-
-# Stats summary of AMR data sets
-summary(data_sets_filtered)
-
-## Pearson correlation between two variables
-cat("=======================================================================================================\n")
-cat("Pearson correlation between Accuracy and Identity\n")
-cor(Accuracy, Identity, method = "pearson")
-
-# Linear regression model Accuracy vs Identity
-cat("=======================================================================================================\n")
-cat("Linear regression model Accuracy vs Identity\n")
-model <- lm(Accuracy~Identity, data = data_sets_filtered)
-summary(model)
-
-# Comparison - T-test
-cat("=======================================================================================================\n")
-cat("T-test are used when the two set of population data are normally distributed\n")
-cat("data1(Accuracy, Model_Type == rRNA mutation model)\n")
-cat("data2(Accuracy, Model_Type == protein homolog model)\n")
-
-data1 <- subset(Accuracy, Model_Type == "rRNA mutation model")
-data2 <- subset(Accuracy, Model_Type == "protein homolog model")
-t.test(data1, data2)
-
-
-# Stop writing to the file
-sink()
+# Apply source function
+source("./stats.R")
+# Stats analyis of amra data frame ########
+basic_stats(data_sets_filtered)
 
 # ARM Model Types Frequency
 q <- ggplot(data_sets_filtered, aes(x=factor(Model_Type), fill=Model_Type))
